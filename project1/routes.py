@@ -5,6 +5,8 @@ from project1.models import User, File
 from project1.forms import RegistrationForm, LoginForm
 from flask_login import login_user, logout_user,current_user
 from project1.s3 import S3
+from werkzeug.utils import secure_filename
+
 downloads = [
     {
         'file_name': 'Download File',
@@ -21,6 +23,7 @@ downloads = [
     }
 ]
 
+s3 =S3()
 
 @app.route('/')
 @app.route('/home')
@@ -66,17 +69,22 @@ def logout():
 
 @app.route('/upload_file', methods=['GET','POST'])
 def upload_file():
+    s3 = S3()
     if request.method == 'POST':
         if request.files:
             user_file = request.files['file']
-            object_name = current_user.email+"/"+user_file
+            filename = secure_filename(user_file.filename)
+            object_name = current_user.email+"/"+filename
             #Send to bucket
-            S3.upload(user_file,object_name, current_user.email)
+            print(filename)
+            print(object_name)
+            print(current_user.email)
+            s3.upload(user_file, object_name, current_user.email)
             #Push to DB
-            upload_file = File(name=user_file,description=request.form['description'])
+            #upload_file = File(name=user_file,description=request.form['description'])
             print(request.form['description'])
             print(user_file)
         
             return redirect(url_for('user'))
 
-    return render_template('user')
+    #return render_template('user.html')

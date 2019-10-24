@@ -10,17 +10,17 @@ class S3:
 
     s3 = boto3.client('s3')
 
-    def upload(self, filename, object_name,email):
+    def upload(self, filename, object_name, email):
         s3 = boto3.resource(
             's3',
-            aws_access_key_id=ACCESS_KEY_ID,
-            aws_secret_access_key=ACCESS_SECRET_KEY,
+            aws_access_key_id='AKIAJ2YZDIMZLHWKIYIQ',
+            aws_secret_access_key='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',
             config=Config(signature_version='s3v4')
         )
 
-        s3.Bucket(BUCKET_NAME).put_object(Key=email+'/'+object_name, Body=filename)
+        s3.Bucket("project1-bucket123").put_object(Key=email+'/'+object_name, Body=filename)
 
-        print("Done")
+        print('done')
 
     def download(self, object_key, filename):
         try:
