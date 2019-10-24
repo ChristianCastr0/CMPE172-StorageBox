@@ -5,16 +5,16 @@ from botocore.exceptions import ClientError
 
 class S3:
     BUCKET_NAME="project1-bucket123"
-    ACCESS_KEY_ID='AKIAJ2YZDIMZLHWKIYIQ'
-    ACCESS_SECRET_KEY='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'
+    ACCESS_KEY_ID=''
+    ACCESS_SECRET_KEY=''
 
     s3 = boto3.client('s3')
 
     def upload(self, filename, object_name, email):
         s3 = boto3.resource(
             's3',
-            aws_access_key_id='AKIAJ2YZDIMZLHWKIYIQ',
-            aws_secret_access_key='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',
+            aws_access_key_id='',
+            aws_secret_access_key='',
             config=Config(signature_version='s3v4')
         )
 
