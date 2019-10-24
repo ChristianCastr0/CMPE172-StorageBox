@@ -1,5 +1,4 @@
 from flask import render_template, url_for, flash, redirect, request
-import cgi
 from project1 import app, db, bcrypt
 from project1.models import User, File
 from project1.forms import RegistrationForm, LoginForm
