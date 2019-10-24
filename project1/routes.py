@@ -1,26 +1,11 @@
 from flask import render_template, url_for, flash, redirect, request
+import cgi
 from project1 import app, db, bcrypt
 from project1.models import User, File
 from project1.forms import RegistrationForm, LoginForm
 from flask_login import login_user, logout_user,current_user
 from project1.s3 import S3
 from werkzeug.utils import secure_filename
-
-downloads = [
-    {
-        'file_name': 'Download File',
-        'download_date': '10/19/2019',
-        'download_time': '15:20:12',
-        'last_update': '10/19/2019',
-        'description': 'This is my download file'
-    },
-    {
-        'file_name': 'Download File2',
-        'download_date': '10/19/2019',
-        'download_time': '15:20:12',
-        'last_update': '10/19/2019'
-    }
-]
 
 s3 =S3()
 
@@ -56,7 +41,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.passwrd, form.password.data):
             login_user(user,remember=form.remember.data)
-            return redirect(url_for('home'))
+            return redirect(url_for('user'))
         else:
             flash('Incorrect Email/Password', 'danger')
     return render_template('login.html', title='Login', form=form)

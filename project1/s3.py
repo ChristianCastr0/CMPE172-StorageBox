@@ -13,12 +13,12 @@ class S3:
     def upload(self, filename, object_name, email):
         s3 = boto3.resource(
             's3',
-            aws_access_key_id='',
-            aws_secret_access_key='',
+            aws_access_key_id=ACCESS_KEY_ID,
+            aws_secret_access_key=ACCESS_SECRET_KEY,
             config=Config(signature_version='s3v4')
         )
 
-        s3.Bucket("project1-bucket123").put_object(Key=email+'/'+object_name, Body=filename)
+        s3.Bucket("BUCKET_NAME").put_object(Key=email+'/'+object_name, Body=filename)
 
         print('done')
 
